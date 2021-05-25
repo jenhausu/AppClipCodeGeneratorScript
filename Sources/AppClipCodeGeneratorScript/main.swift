@@ -14,19 +14,34 @@ struct AppClipCodeGenerator: ParsableCommand {
     @Option(name: [.short, .customLong("color")], help: "default color template index")
     var colorTemplateIndex: String = "15"
     
+    @Option(name: .customLong("show"), help: "show final url")
+    var printURL: Bool = false
+    
     mutating func run() throws {
         let urlPrefix = "\(url)/contact?id="
         
         if let endId = endId {
             for i in startId...endId {
-                generateCode(url: "\(urlPrefix)\(i)",
+                let fileName = "\(i).svg"
+                let url = "\(urlPrefix)\(i)"
+                if printURL {
+                    print(url)
+                }
+                
+                generateCode(url: url,
                              colorTemplateIndex: colorTemplateIndex,
-                             outputPath: "/Users/sujianhao/Downloads/AppClipCodeImage/\(i).svg")
+                             outputPath: "/Users/sujianhao/Downloads/AppClipCodeImage/" + fileName)
             }
         } else {
-            generateCode(url: "\(urlPrefix)\(startId)",
+            let fileName = "\(startId).svg"
+            let url = "\(urlPrefix)\(startId)"
+            if printURL {
+                print(url)
+            }
+            
+            generateCode(url: url,
                          colorTemplateIndex: colorTemplateIndex,
-                         outputPath: "/Users/sujianhao/Downloads/AppClipCodeImage/\(startId).svg")
+                         outputPath: "/Users/sujianhao/Downloads/AppClipCodeImage/" + fileName)
         }
     }
     
