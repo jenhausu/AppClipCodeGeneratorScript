@@ -108,11 +108,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--show"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "true"
+            argument = "--verbose"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
