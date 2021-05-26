@@ -22,8 +22,11 @@ struct AppClipCodeGenerator: ParsableCommand {
     
     mutating func run() throws {
         let urlPrefix = "\(url)/contact?id="
+        var outputPath = "./" + folderName + "/"
+        #if DEBUG
+        outputPath = "~/Downloads/" + folderName + "/"
+        #endif
         
-        let outputPath = "./" + folderName + "/"
         let fileManager = FileManager.default
         if !fileManager.fileExists(atPath: outputPath) {
             do {
