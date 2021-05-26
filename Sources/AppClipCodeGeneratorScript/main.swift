@@ -14,23 +14,22 @@ struct AppClipCodeGenerator: ParsableCommand {
     @Option(name: [.short, .customLong("color")], help: "default color template index")
     var colorTemplateIndex: String = "15"
     
+    @Option(name: [.short, .customLong("folder")], help: "A file to save")
+    var folderName: String = "AppClipCodeImage"
+    
     @Option(name: .customLong("show"), help: "show final url")
     var printURL: Bool = false
     
     mutating func run() throws {
         let urlPrefix = "\(url)/contact?id="
         
-        if let endId = endId {
-            for i in startId...endId {
-                let fileName = "\(i).svg"
-                let url = "\(urlPrefix)\(i)"
-                if printURL {
-                    print(url)
-                }
-                
-                generateCode(url: url,
-                             colorTemplateIndex: colorTemplateIndex,
-                             outputPath: "/Users/sujianhao/Downloads/AppClipCodeImage/" + fileName)
+        let outputPath = "./" + folderName + "/"
+        let fileManager = FileManager.default
+        if !fileManager.fileExists(atPath: outputPath) {
+            do {
+                try fileManager.createDirectory(atPath: outputPath, withIntermediateDirectories: true, attributes: nil)
+            } catch {
+                print(error.localizedDescription)
             }
         }
         let endId = endId ?? startId
@@ -43,18 +42,18 @@ struct AppClipCodeGenerator: ParsableCommand {
             
             generateCode(url: url,
                          colorTemplateIndex: colorTemplateIndex,
-                         outputPath: "/Users/sujianhao/Downloads/AppClipCodeImage/" + fileName)
+                         filePath: outputPath + fileName)
         }
     }
     
-    private func generateCode(url: String, colorTemplateIndex index: String, outputPath: String) {
+    private func generateCode(url: String, colorTemplateIndex index: String, filePath: String) {
         let command = "/usr/local/bin/AppClipCodeGenerator"
         
         let arguments = ["generate",
                          "--url", url,
                          "--index", index,
-                         "--output", outputPath]
         try? Process.execute(command, arguments: arguments)
+                         "--output", filePath]
     }
 }
 
