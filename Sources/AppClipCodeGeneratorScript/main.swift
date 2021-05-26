@@ -21,7 +21,6 @@ struct AppClipCodeGenerator: ParsableCommand {
     var verbose = false
     
     mutating func run() throws {
-        let urlPrefix = "\(url)/contact?id="
         var outputPath = "./" + folderName + "/"
         #if DEBUG
         outputPath = "~/Downloads/" + folderName + "/"
@@ -35,6 +34,8 @@ struct AppClipCodeGenerator: ParsableCommand {
                 print(error.localizedDescription)
             }
         }
+        
+        let urlPrefix = "\(url)/contact?id="
         let endId = endId ?? startId
         for i in startId...endId {
             let fileName = "\(i).svg"
