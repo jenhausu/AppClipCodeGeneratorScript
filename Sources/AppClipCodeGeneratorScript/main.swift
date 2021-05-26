@@ -32,9 +32,11 @@ struct AppClipCodeGenerator: ParsableCommand {
                              colorTemplateIndex: colorTemplateIndex,
                              outputPath: "/Users/sujianhao/Downloads/AppClipCodeImage/" + fileName)
             }
-        } else {
-            let fileName = "\(startId).svg"
-            let url = "\(urlPrefix)\(startId)"
+        }
+        let endId = endId ?? startId
+        for i in startId...endId {
+            let fileName = "\(i).svg"
+            let url = "\(urlPrefix)\(i)"
             if printURL {
                 print(url)
             }
