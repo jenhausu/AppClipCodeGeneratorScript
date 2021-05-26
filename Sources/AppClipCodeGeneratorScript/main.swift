@@ -17,8 +17,8 @@ struct AppClipCodeGenerator: ParsableCommand {
     @Option(name: [.short, .customLong("folder")], help: "A file to save")
     var folderName: String = "AppClipCodeImage"
     
-    @Option(name: .customLong("show"), help: "show final url")
-    var printURL: Bool = false
+    @Flag(name: .shortAndLong, help: "show invoked url")
+    var verbose = false
     
     mutating func run() throws {
         let urlPrefix = "\(url)/contact?id="
@@ -36,7 +36,7 @@ struct AppClipCodeGenerator: ParsableCommand {
         for i in startId...endId {
             let fileName = "\(i).svg"
             let url = "\(urlPrefix)\(i)"
-            if printURL {
+            if verbose {
                 print(url)
             }
             
