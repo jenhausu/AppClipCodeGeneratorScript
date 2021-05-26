@@ -52,8 +52,12 @@ struct AppClipCodeGenerator: ParsableCommand {
         let arguments = ["generate",
                          "--url", url,
                          "--index", index,
-        try? Process.execute(command, arguments: arguments)
                          "--output", filePath]
+        do {
+            try Process.execute(command, arguments: arguments)
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 }
 
