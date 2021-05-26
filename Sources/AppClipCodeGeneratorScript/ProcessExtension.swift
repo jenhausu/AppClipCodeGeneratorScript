@@ -21,9 +21,7 @@ extension Process {
             try task.run()
             let data = pipe.fileHandleForReading.readDataToEndOfFile()
             if let output = String(data: data, encoding: String.Encoding.utf8) {
-                #if DEBUG
                 print(output)
-                #endif
             }
         } catch {
             print(error.localizedDescription)
